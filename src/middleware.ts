@@ -7,11 +7,13 @@ interface DecodedToken {
 }
 export function middleware(request: NextRequest) {
   const response = NextResponse.next();
-  response.headers.set('Access-Control-Allow-Origin', 'https://test-web-v3-rho.vercel.app/'); // Hoặc domain cụ thể
+  response.headers.set('Access-Control-Allow-Origin', 'https://test-web-v3-rho.vercel.app');
   response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (request.method === 'OPTIONS') {
-    return response;
+    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    return new Response(null, { status: 204, headers: response.headers });
   }
   const pathname = request.nextUrl.pathname;
   if(pathname.startsWith('/api/v1/user')){
@@ -76,7 +78,6 @@ function decodeToken(token: string): DecodedToken | null {
   }
 }
 
-// Cấu hình matcher cho 2 API cụ thể
 export const config = {
-  matcher: ['/api/v1/admin/:path*', '/api/v1/user/:path*']
+  matcher: ['/api/v1/admin/:path*', '/api/v1/user/:path*', '/api/:path*'],
 };
