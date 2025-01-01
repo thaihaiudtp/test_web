@@ -1,9 +1,9 @@
 import { Sequelize } from "sequelize";
 import * as mysql2 from 'mysql2';
-const sequelize = new Sequelize('elearning', 'root', '0902', {
-    host: 'localhost',
+const sequelize = new Sequelize('sql5755150', 'sql5755150', 'aYPca1iwdk', {
+    host: 'sql5.freesqldatabase.com',
     dialect: 'mysql', 
-    dialectModule: mysql2, // Đảm bảo sử dụng MySQL
+    dialectModule: mysql2, 
 });
 
 export const testConnection = async () => {
