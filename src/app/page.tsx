@@ -16,7 +16,7 @@ export default function Home() {
   const getToken = Cookies.get('token');
   const router = useRouter();
   const [test, setTest] = useState<TestItem[]>([]);
-  const [err, setErr] = useState(null);
+  const [err, setErr] = useState('');
   useEffect(() => {
     if(!getToken){
       router.push('/login'); 
@@ -26,8 +26,9 @@ export default function Home() {
         const data = await GetTest();
         console.log(data.data)
         setTest(data.data);
-      } catch (error: any) {
-        setErr(error.message);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "Có lỗi xảy ra";
+        setErr(errorMessage);
       }
     }
     fetchTest();  

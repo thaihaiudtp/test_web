@@ -1,6 +1,6 @@
 'use client'
 import { useRouter, usePathname } from "next/navigation";
-
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
@@ -12,7 +12,7 @@ export default function Header(){
     const router = useRouter();
     const pathName = usePathname();
     const [user, setUser] = useState<User | null>(null);
-    const getToken = Cookies.get();
+    const getToken = Cookies.get('token');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const handleOpenClick = () => {
@@ -37,8 +37,8 @@ export default function Header(){
         window.location.href = '/login'; 
     }
     useEffect(()=>{
-        if(getToken?.token){
-            const decode = jwtDecode<User>(getToken.token);
+        if(getToken){
+            const decode = jwtDecode<User>(getToken);
             setUser(decode);
         }
 
@@ -98,7 +98,7 @@ export default function Header(){
                                     onClick={handleClick}
                                     className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-300"
                                     >
-                                    <img src="https://i.pinimg.com/236x/5e/e0/82/5ee082781b8c41406a2a50a0f32d6aa6.jpg" alt="Avatar" className="w-full h-full object-cover" />
+                                    <Image src="https://i.pinimg.com/236x/5e/e0/82/5ee082781b8c41406a2a50a0f32d6aa6.jpg" alt="Avatar" className="w-full h-full object-cover" />
                                     </button>
                         
                                     {isOpen && (

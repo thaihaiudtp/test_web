@@ -2,13 +2,11 @@
 import Image from "next/image";
 import {LoginAPI} from "@/service/auth";
 import { useState } from "react";
-import { useRouter } from 'next/navigation';
 import Cookies from "js-cookie";
 export default function Login(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const router = useRouter();
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); 
         try {

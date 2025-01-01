@@ -1,7 +1,18 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-
+interface DecodedToken {
+  id: string;
+  role: number;
+  exp: number; 
+}
 export function middleware(request: NextRequest) {
+  const response = NextResponse.next();
+  response.headers.set('Access-Control-Allow-Origin', 'http://192.168.1.17:3000'); // Hoặc domain cụ thể
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (request.method === 'OPTIONS') {
+    return response;
+  }
   const pathname = request.nextUrl.pathname;
   if(pathname.startsWith('/api/v1/user')){
     return userMiddleware(request);
@@ -20,7 +31,7 @@ function userMiddleware(request: NextRequest){
     );
   }
   const userToken = decodeToken(token);
-  if (!userToken || userToken.role !== 0 || userToken.role !== 1) {
+  if (!userToken || userToken.role !== 0) {
     return NextResponse.json({ error: 'Forbidden: Users only' }, { status: 403 });
   } 
   const response = NextResponse.next();
@@ -51,9 +62,9 @@ function extractBearerToken(authorizationHeader: string | null): string | null {
 
   return authorizationHeader.split(' ')[1]; 
 }
-function decodeToken(token: string): any | null {
+function decodeToken(token: string): DecodedToken | null {
   try {
-    const decoded = JSON.parse(atob(token.split('.')[1])); 
+    const decoded = JSON.parse(atob(token.split('.')[1])) as DecodedToken; 
     const now = Math.floor(Date.now() / 1000);
     if(decoded.exp < now){
         return null;

@@ -11,7 +11,8 @@ export async function GetTest() {
         const data = await response.json();
         console.log(data);
         return data;
-    } catch (error: any) {
-        throw new Error(error.message);
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "Có lỗi xảy ra";
+        throw new Error(errorMessage);
     }
 }

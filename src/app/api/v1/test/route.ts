@@ -22,11 +22,12 @@ export async function GET() {
                 status: 200,
             }
         )
-    } catch (error) {
+    } catch (error: unknown) {
+        const errorMessage = error instanceof Error ? error.message : "Có lỗi xảy ra";
         return NextResponse.json(
             {
                 success: false,
-                message: error,
+                message: errorMessage,
             },
             {
                 status: 500
