@@ -1,7 +1,7 @@
 
 export async function Signup(name: string, email: string, password: string) {
     const body = JSON.stringify({ name, email, password });
-    const res = await fetch('https://test-web-v3.vercel.app/api/v1/api/v1/auth/signup', 
+    const res = await fetch('https://test-web-v3-rho.vercel.app/api/v1/auth/signup', 
       {
         method: 'POST',
         headers:{
@@ -21,7 +21,7 @@ export async function Signup(name: string, email: string, password: string) {
 export async function LoginAPI(email: string, password: string) {
     const body = JSON.stringify({ email, password });
     try {
-        const res = await fetch('https://test-web-v3.vercel.app/api/v1/api/v1/auth/signin', {
+        const res = await fetch('https://test-web-v3-rho.vercel.app/api/v1/auth/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

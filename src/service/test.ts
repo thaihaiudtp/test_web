@@ -1,6 +1,6 @@
 export async function GetTest() {
     try {
-        const response = await fetch('http://localhost:3000/api/v1/test',
+        const response = await fetch('https://test-web-v3-rho.vercel.app/api/v1/test',
             {
                 method: 'GET',    
                 headers: {
