@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
     return new Response(null, {
       status: 204,
       headers: {
-        'Access-Control-Allow-Origin': 'https://test-web-v3-rho.vercel.app',
+        'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
       },
@@ -22,9 +22,14 @@ export function middleware(request: NextRequest) {
 
   // Default response setup
   const response = NextResponse.next();
-  response.headers.set('Access-Control-Allow-Origin', 'https://test-web-v3-rho.vercel.app');
-  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    // add the CORS headers to the response
+    response.headers.append('Access-Control-Allow-Credentials', "true")
+    response.headers.append('Access-Control-Allow-Origin', '*') // replace this your actual origin
+    response.headers.append('Access-Control-Allow-Methods', 'GET,DELETE,PATCH,POST,PUT')
+    response.headers.append(
+        'Access-Control-Allow-Headers',
+        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    )
 
   const pathname = request.nextUrl.pathname;
 
